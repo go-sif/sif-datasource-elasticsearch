@@ -3,7 +3,10 @@
 An ElasticSearch (6/7) DataSource for Sif.
 
 ```bash
-$ go get github.com/go-sif/sif-datasource-elasticsearch
+$ go get github.com/go-sif/sif-datasource-elasticsearch@master
+$ go get github.com/elastic/go-elasticsearch/v7@7.x
+# or
+$ go get github.com/elastic/go-elasticsearch/v6@6.x
 ```
 
 ## Usage
