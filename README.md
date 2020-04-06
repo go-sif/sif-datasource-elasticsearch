@@ -38,10 +38,10 @@ import (
 )
 
 // ...
-query := "{}" // no need to include index, size or scrolling
-			  // params, as they will be overridden by sif
+queryJSON := "" // no need to include index, size or scrolling
+				// params, as they will be overridden by sif
 // Full access to the SearchRequest object is provided for further query customization
-req := &es7api.SearchRequest{Body: strings.NewReader(query)}
+req := &es7api.SearchRequest{Body: strings.NewReader(queryJSON)}
 ```
 
 3. Finally, define your configuration and create a `DataFrame` which can be manipulated with `sif`:
