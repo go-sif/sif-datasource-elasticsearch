@@ -57,6 +57,9 @@ func CreateDataFrame(conf *DataSourceConf, schema sif.Schema) sif.DataFrame {
 	} else if len(conf.Index) == 0 {
 		log.Fatal("Must specify an Index name")
 	} else {
+		// add ES-specific fields to schema
+		schema.CreateColumn("es._id", &sif.StringColumnType{Length: 512})
+		schema.CreateColumn("es._score", &sif.Float32ColumnType{})
 		source = &DataSource{schema, conf}
 		df := datasource.CreateDataFrame(source, nil, schema)
 		return df
