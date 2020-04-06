@@ -25,7 +25,7 @@ schema.CreateColumn("date", &sif.TimeColumnType{Format: "2006-01-02 15:04:05"})
 //  - es._score (the document score)
 ```
 
-1. Then, define an ES query to filter data from the target index:
+2. Then, define an ES query to filter data from the target index:
 
 ```go
 import (
@@ -41,7 +41,7 @@ query := "{}" // no need to include index, size or scrolling
 req := &es7api.SearchRequest{Body: strings.NewReader(query)}
 ```
 
-1. Finally, define your configuration and create a `DataFrame` which can be manipulated with `sif`:
+3. Finally, define your configuration and create a `DataFrame` which can be manipulated with `sif`:
 
 ```go
 import (
