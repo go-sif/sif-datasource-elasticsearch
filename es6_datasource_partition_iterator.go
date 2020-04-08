@@ -10,6 +10,7 @@ import (
 	es6api "github.com/elastic/go-elasticsearch/v6/esapi"
 	"github.com/go-sif/sif"
 	"github.com/go-sif/sif/datasource"
+	"github.com/go-sif/sif/datasource/parser/jsonl"
 	siferrors "github.com/go-sif/sif/errors"
 	"github.com/tidwall/gjson"
 )
@@ -77,6 +78,10 @@ func (espi *es6PartitionIterator) NextPartition() (sif.Partition, error) {
 
 func (espi *es6PartitionIterator) producePartition(res *es6api.Response) (sif.Partition, error) {
 	colNames := espi.source.schema.ColumnNames()
+	// prefix column names so they search the actual document within the response
+	for i, name := range colNames {
+		colNames[i] = fmt.Sprintf("_source.%s", name)
+	}
 	colTypes := espi.source.schema.ColumnTypes()
 	defer res.Body.Close()
 	var b bytes.Buffer
@@ -101,7 +106,7 @@ func (espi *es6PartitionIterator) producePartition(res *es6api.Response) (sif.Pa
 		if err != nil {
 			return nil, err
 		}
-		err = scanRow(colNames, colTypes, hits[i], row)
+		err = jsonl.ParseJSONRow(colNames, colTypes, hits[i], row)
 		if err != nil {
 			return nil, err
 		}
