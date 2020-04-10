@@ -15,6 +15,8 @@ github.com/envoyproxy/go-control-plane v0.9.1-0.20191026205805-5f8ba28d4473/go.m
 github.com/envoyproxy/protoc-gen-validate v0.1.0/go.mod h1:iSmxcyjqTsJpI2R4NaDN7+kN2VEUnK/pcBlmesArF7c=
 github.com/go-sif/sif v0.0.0-20200408232711-29c2b64e0324 h1:KNt02iX3+grT/F/9Ats52dLuHk7+cMdphwOIs1eiXLM=
 github.com/go-sif/sif v0.0.0-20200408232711-29c2b64e0324/go.mod h1:03mHP7B72xltwQQnOvdf4A9w3g6yWladwVTGXF4fSfU=
+github.com/go-sif/sif v0.0.0-20200410224535-57f7ee19a0d9 h1:PLpGUV+clFjwTbPJCDE2vOm6P7m1pTqtnGuqNGjhds8=
+github.com/go-sif/sif v0.0.0-20200410224535-57f7ee19a0d9/go.mod h1:03mHP7B72xltwQQnOvdf4A9w3g6yWladwVTGXF4fSfU=
 github.com/gofrs/uuid v3.2.0+incompatible h1:y12jRkkFxsd7GpqdSZ+/KCs/fJbqpEXSGd4+jfEaewE=
 github.com/gofrs/uuid v3.2.0+incompatible/go.mod h1:b2aQJv3Z4Fp6yNu3cdSllBxTCLRxnplIgP/c0N/04lM=
 github.com/golang/glog v0.0.0-20160126235308-23def4e6c14b h1:VKtxabqXZkF25pY9ekfRL6a582T4P37/31XEstQ5p58=

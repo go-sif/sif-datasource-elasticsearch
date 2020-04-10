@@ -25,6 +25,7 @@ type es6PartitionIterator struct {
 	scrollID            string
 	finished            bool
 	lock                sync.Mutex
+	colNames            []string
 }
 
 func (espi *es6PartitionIterator) OnEnd(onEnd func()) {
@@ -77,10 +78,19 @@ func (espi *es6PartitionIterator) NextPartition() (sif.Partition, error) {
 }
 
 func (espi *es6PartitionIterator) producePartition(res *es6api.Response) (sif.Partition, error) {
-	colNames := espi.source.schema.ColumnNames()
-	// prefix column names so they search the actual document within the response
-	for i, name := range colNames {
-		colNames[i] = fmt.Sprintf("_source.%s", name)
+	if espi.colNames == nil {
+		colNames := espi.source.schema.ColumnNames()
+		// prefix column names so they search the actual document within the response
+		for i, name := range colNames {
+			if colNames[i] == "es._id" {
+				colNames[i] = "_id"
+			} else if (colNames[i]) == "es._score" {
+				colNames[i] = "_score"
+			} else {
+				colNames[i] = fmt.Sprintf("_source.%s", name)
+			}
+		}
+		espi.colNames = colNames
 	}
 	colTypes := espi.source.schema.ColumnTypes()
 	defer res.Body.Close()
@@ -106,7 +116,7 @@ func (espi *es6PartitionIterator) producePartition(res *es6api.Response) (sif.Pa
 		if err != nil {
 			return nil, err
 		}
-		err = jsonl.ParseJSONRow(colNames, colTypes, hits[i], row)
+		err = jsonl.ParseJSONRow(espi.colNames, colTypes, hits[i], row)
 		if err != nil {
 			return nil, err
 		}
