@@ -110,9 +110,10 @@ func (espi *es6PartitionIterator) producePartition(res *es6api.Response) (sif.Pa
 		// return
 		return part, nil
 	}
+	tempRow := datasource.CreateTempRow()
 	for i := 0; i < len(hits); i++ {
 		// create a new row to place values into
-		row, err := part.AppendEmptyRowData()
+		row, err := part.AppendEmptyRowData(tempRow)
 		if err != nil {
 			return nil, err
 		}
