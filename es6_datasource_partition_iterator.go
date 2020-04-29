@@ -18,14 +18,14 @@ import (
 // with help from https://github.com/elastic/go-elasticsearch/issues/44
 
 type es6PartitionIterator struct {
-	source              *DataSource
-	shard               int64
-	widestInitialSchema sif.Schema
-	client              *elasticsearch6.Client
-	scrollID            string
-	finished            bool
-	lock                sync.Mutex
-	colNames            []string
+	source                     *DataSource
+	shard                      int64
+	widestInitialPrivateSchema sif.Schema
+	client                     *elasticsearch6.Client
+	scrollID                   string
+	finished                   bool
+	lock                       sync.Mutex
+	colNames                   []string
 }
 
 func (espi *es6PartitionIterator) OnEnd(onEnd func()) {
@@ -101,7 +101,7 @@ func (espi *es6PartitionIterator) producePartition(res *es6api.Response) (sif.Pa
 	// check number of results
 	hits := gjson.Get(body, "hits.hits").Array()
 	// produce partition
-	part := datasource.CreateBuildablePartition(espi.source.conf.PartitionSize, espi.widestInitialSchema, espi.source.schema)
+	part := datasource.CreateBuildablePartition(espi.source.conf.PartitionSize, espi.widestInitialPrivateSchema, espi.source.schema)
 	if len(hits) < 1 {
 		// close scroll
 		espi.client.ClearScroll(espi.client.ClearScroll.WithScrollID(espi.scrollID))

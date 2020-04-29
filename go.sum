@@ -13,8 +13,8 @@ github.com/elastic/go-elasticsearch/v7 v7.5.1-0.20200331092244-5fd3a6804009 h1:L
 github.com/elastic/go-elasticsearch/v7 v7.5.1-0.20200331092244-5fd3a6804009/go.mod h1:OJ4wdbtDNk5g503kvlHLyErCgQwwzmDtaFC4XyOxXA4=
 github.com/envoyproxy/go-control-plane v0.9.1-0.20191026205805-5f8ba28d4473/go.mod h1:YTl/9mNaCwkRvm6d1a2C3ymFceY/DCBVvsKhRF0iEA4=
 github.com/envoyproxy/protoc-gen-validate v0.1.0/go.mod h1:iSmxcyjqTsJpI2R4NaDN7+kN2VEUnK/pcBlmesArF7c=
-github.com/go-sif/sif v0.0.0-20200425054309-f006abe296d0 h1:ttIiIh+do4eHGjUqO/a/qD3y/KNNZ7UnN8Qmm0Lf1+c=
-github.com/go-sif/sif v0.0.0-20200425054309-f006abe296d0/go.mod h1:NI+X6vL47x3FmDAmWDbUyUHkGMDzQeBjQJiYW5u86/U=
+github.com/go-sif/sif v0.0.0-20200429044831-455e5499d583 h1:S9+DE/Omwq538SO4zYFXZvYU6XK3zFUlmJi4MK12qWc=
+github.com/go-sif/sif v0.0.0-20200429044831-455e5499d583/go.mod h1:NI+X6vL47x3FmDAmWDbUyUHkGMDzQeBjQJiYW5u86/U=
 github.com/gofrs/uuid v3.2.0+incompatible h1:y12jRkkFxsd7GpqdSZ+/KCs/fJbqpEXSGd4+jfEaewE=
 github.com/gofrs/uuid v3.2.0+incompatible/go.mod h1:b2aQJv3Z4Fp6yNu3cdSllBxTCLRxnplIgP/c0N/04lM=
 github.com/golang/glog v0.0.0-20160126235308-23def4e6c14b h1:VKtxabqXZkF25pY9ekfRL6a582T4P37/31XEstQ5p58=
