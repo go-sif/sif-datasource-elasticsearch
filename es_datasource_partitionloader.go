@@ -19,11 +19,11 @@ func (pl *PartitionLoader) ToString() string {
 }
 
 // Load is capable of loading partitions of data from a file
-func (pl *PartitionLoader) Load(parser sif.DataSourceParser, widestInitialPrivateSchema sif.Schema) (sif.PartitionIterator, error) {
+func (pl *PartitionLoader) Load(parser sif.DataSourceParser, widestInitialSchema sif.Schema) (sif.PartitionIterator, error) {
 	if pl.source.conf.ES6Conf != nil {
-		return &es6PartitionIterator{source: pl.source, shard: pl.shard, widestInitialPrivateSchema: widestInitialPrivateSchema}, nil
+		return &es6PartitionIterator{source: pl.source, shard: pl.shard, widestInitialSchema: widestInitialSchema}, nil
 	} else if pl.source.conf.ES7Conf != nil {
-		return &es7PartitionIterator{source: pl.source, shard: pl.shard, widestInitialPrivateSchema: widestInitialPrivateSchema}, nil
+		return &es7PartitionIterator{source: pl.source, shard: pl.shard, widestInitialSchema: widestInitialSchema}, nil
 	}
 	return nil, nil
 }
