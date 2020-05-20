@@ -39,13 +39,13 @@ func (espi *es7PartitionIterator) HasNextPartition() bool {
 	return !espi.finished
 }
 
-func (espi *es7PartitionIterator) NextPartition() (sif.Partition, error) {
+func (espi *es7PartitionIterator) NextPartition() (sif.Partition, func(), error) {
 	espi.lock.Lock()
 	defer espi.lock.Unlock()
 	if !espi.finished && espi.client == nil {
 		client, err := elasticsearch7.NewClient(*espi.source.conf.ES7Conf)
 		if err != nil {
-			return nil, err
+			return nil, nil, err
 		}
 		espi.client = client
 		espi.source.conf.ES7Query.Index = []string{espi.source.conf.Index}
@@ -54,10 +54,10 @@ func (espi *es7PartitionIterator) NextPartition() (sif.Partition, error) {
 		espi.source.conf.ES7Query.Scroll = espi.source.conf.ScrollTimeout
 		res, err := espi.source.conf.ES7Query.Do(ctx.Background(), espi.client)
 		if err != nil {
-			return nil, err
+			return nil, nil, err
 		}
 		if res.IsError() {
-			return nil, fmt.Errorf("Unable to scroll documents: %s", res)
+			return nil, nil, fmt.Errorf("Unable to scroll documents: %s", res)
 		}
 		return espi.producePartition(res)
 	} else if !espi.finished {
@@ -67,17 +67,17 @@ func (espi *es7PartitionIterator) NextPartition() (sif.Partition, error) {
 			espi.client.Scroll.WithScroll(espi.source.conf.ScrollTimeout),
 		)
 		if err != nil {
-			return nil, fmt.Errorf("Unable to scroll documents: %s", err)
+			return nil, nil, fmt.Errorf("Unable to scroll documents: %s", err)
 		}
 		if res.IsError() {
-			return nil, fmt.Errorf("Unable to scroll documents: %s", res)
+			return nil, nil, fmt.Errorf("Unable to scroll documents: %s", res)
 		}
 		return espi.producePartition(res)
 	}
-	return nil, siferrors.NoMorePartitionsError{}
+	return nil, nil, siferrors.NoMorePartitionsError{}
 }
 
-func (espi *es7PartitionIterator) producePartition(res *es7api.Response) (sif.Partition, error) {
+func (espi *es7PartitionIterator) producePartition(res *es7api.Response) (sif.Partition, func(), error) {
 	if espi.colNames == nil {
 		colNames := espi.source.schema.ColumnNames()
 		// prefix column names so they search the actual document within the response
@@ -108,19 +108,19 @@ func (espi *es7PartitionIterator) producePartition(res *es7api.Response) (sif.Pa
 		espi.scrollID = ""
 		espi.finished = true
 		// return
-		return part, nil
+		return part, nil, nil
 	}
 	tempRow := datasource.CreateTempRow()
 	for i := 0; i < len(hits); i++ {
 		// create a new row to place values into
 		row, err := part.AppendEmptyRowData(tempRow)
 		if err != nil {
-			return nil, err
+			return nil, nil, err
 		}
 		err = jsonl.ParseJSONRow(espi.colNames, colTypes, hits[i], row)
 		if err != nil {
-			return nil, err
+			return nil, nil, err
 		}
 	}
-	return part, nil
+	return part, nil, nil
 }
