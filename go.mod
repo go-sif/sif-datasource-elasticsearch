@@ -10,4 +10,6 @@ require (
 	github.com/tidwall/gjson v1.6.0
 )
 
-go 1.14
+replace github.com/go-sif/sif v0.0.0-20200520005205-e99f8baeb897 => ../sif
+
+go 1.18
