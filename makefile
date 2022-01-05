@@ -1,5 +1,6 @@
 version=0.1.0
 export GOPROXY=direct
+export DOCKER=docker # can use "make DOCKER=podman start-testenv" to override
 
 .PHONY: all dependencies clean test cover testall testvall start-testenv stop-testenv
 
@@ -39,7 +40,7 @@ lint:
 
 start-testenv:
 	@echo "Starting ES container..."
-	@docker run -d --name sif-datasource-elasticsearch -e cluster.routing.allocation.disk.threshold_enabled=false -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" docker.elastic.co/elasticsearch/elasticsearch:7.6.2
+	@${DOCKER} run -d --name sif-datasource-elasticsearch -e cluster.routing.allocation.disk.threshold_enabled=false -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" docker.elastic.co/elasticsearch/elasticsearch:7.6.2
 	@echo "Waiting 30 seconds for container to bootstrap..."
 	@sleep 30
 	@echo "Deleting index if present..."
@@ -51,7 +52,7 @@ start-testenv:
 	@echo "Finished inserting EDSM test files."
 
 stop-testenv:
-	@docker rm -fv sif-datasource-elasticsearch
+	@${DOCKER} rm -fv sif-datasource-elasticsearch
 
 test: build
 	@echo "Running tests..."
