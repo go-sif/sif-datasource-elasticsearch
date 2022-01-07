@@ -1,6 +1,8 @@
 version=0.1.0
 export GOPROXY=direct
 export DOCKER=docker # can use "make DOCKER=podman start-testenv" to override
+export ES_HOST=0.0.0.0 # can use "make ES_HOST=elasticsearch seed-testenv" to override
+export ES_PORT=9200 # can use "make ES_PORT=9201 seed-testenv" to override
 
 .PHONY: all dependencies clean test cover testall testvall start-testenv stop-testenv
 
@@ -49,11 +51,11 @@ start-testenv:
 seed-testenv:
 	@echo "Inserting EDSM test files..."
 	@echo "Deleting index if present..."
-	@curl -s -X DELETE "0.0.0.0:9200/edsm" || true > /dev/null 2>&1
+	@curl -s -X DELETE "${ES_HOST}:${ES_PORT}/edsm" || true > /dev/null 2>&1
 	@echo "Creating index..."
-	@curl -s -X PUT "0.0.0.0:9200/edsm" > /dev/null 2>&1
+	@curl -s -X PUT "${ES_HOST}:${ES_PORT}/edsm" > /dev/null 2>&1
 	@echo "Inserting 1000 records from EDSM test data..."
-	@curl -s https://www.edsm.net/dump/systemsWithCoordinates7days.json.gz | gunzip | tail -n +2 | head -n -1 | head -n 1000 | sed 's/,$$//' | sed 's/^....//' | awk '{print "{\"index\":{\"_index\":\"edsm\"}}\n"$$0}' | curl -H 'Content-Type: application/json' --data-binary @- -XPOST '0.0.0.0:9200/edsm/_bulk' > /dev/null 2>&1
+	@curl -s https://www.edsm.net/dump/systemsWithCoordinates7days.json.gz | gunzip | tail -n +2 | head -n -1 | head -n 1000 | sed 's/,$$//' | sed 's/^....//' | awk '{print "{\"index\":{\"_index\":\"edsm\"}}\n"$$0}' | curl -H 'Content-Type: application/json' --data-binary @- -XPOST '${ES_HOST}:${ES_PORT}/edsm/_bulk' > /dev/null 2>&1
 	@echo "Finished inserting EDSM test files."
 
 stop-testenv:
