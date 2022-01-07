@@ -14,6 +14,8 @@ jobs:
     services:
       elasticsearch:
         image: docker.elastic.co/elasticsearch/elasticsearch:7.16.2
+        ports:
+          - 9200:9200
     strategy:
       matrix:
         go: ['1.18beta1']
@@ -35,7 +37,7 @@ jobs:
         key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
         restore-keys: |
           ${{ runner.os }}-go-
-    - run: make ES_HOST=elasticsearch seed-testenv
+    - run: make ES_HOST=localhost seed-testenv
     - run: make dependencies
     - run: make cover
     - uses: codecov/codecov-action@v2
