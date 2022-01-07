@@ -1,6 +1,8 @@
 package elasticsearch
 
-import "github.com/go-sif/sif"
+import (
+	"github.com/go-sif/sif"
+)
 
 // PartitionMap is an iterator producing a sequence of PartitionLoaders
 type PartitionMap struct {
