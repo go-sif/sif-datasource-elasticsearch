@@ -11,6 +11,9 @@ jobs:
     if: "!contains(github.event.head_commit.message, '[skip ci]')"
     name: "Tests (${{ matrix.os }})"
     runs-on: ubuntu-latest
+    services:
+      elasticsearch:
+        image: docker.elastic.co/elasticsearch/elasticsearch:7.16.2
     strategy:
       matrix:
         go: ['1.18beta1']
@@ -32,14 +35,9 @@ jobs:
         key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
         restore-keys: |
           ${{ runner.os }}-go-
-    - name: Install docker test dependencies
-      run: |
-        sudo apt install -y docker.io
-        sudo systemctl start docker
     - run: make dependencies
-    - run: make start-testenv
+    - run: make seed-testenv
     - run: make cover
-    - run: make stop-testenv
     - uses: codecov/codecov-action@v2
       with:
         file: cover.out

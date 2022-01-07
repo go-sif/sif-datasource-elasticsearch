@@ -15,6 +15,7 @@ all:
 	@echo "  lint          - lint the source code"
 	@echo "  fmt           - format the source code"
 	@echo "  start-testenv - start testing environment before running tests"
+	@echo "  seed-testenv  - seed testing environment before running tests"
 	@echo "  test          - test the source code"
 	@echo "  stop-testenv  - stop testing environment after running tests"
 
@@ -40,7 +41,9 @@ lint:
 
 start-testenv:
 	@echo "Starting ES container..."
-	@${DOCKER} run -d --name sif-datasource-elasticsearch -e cluster.routing.allocation.disk.threshold_enabled=false -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" docker.elastic.co/elasticsearch/elasticsearch:7.6.2
+	@${DOCKER} run -d --name sif-datasource-elasticsearch -e cluster.routing.allocation.disk.threshold_enabled=false -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" docker.elastic.co/elasticsearch/elasticsearch:7.16.2
+
+seed-testenv:
 	@echo "Waiting 30 seconds for container to bootstrap..."
 	@sleep 30
 	@echo "Deleting index if present..."
