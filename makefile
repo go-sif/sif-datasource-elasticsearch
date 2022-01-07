@@ -1,8 +1,8 @@
 version=0.1.0
 export GOPROXY=direct
-export DOCKER=docker # can use "make DOCKER=podman start-testenv" to override
-export ES_HOST=0.0.0.0 # can use "make ES_HOST=elasticsearch seed-testenv" to override
-export ES_PORT=9200 # can use "make ES_PORT=9201 seed-testenv" to override
+export DOCKER=docker# can use "make DOCKER=podman start-testenv" to override
+export ES_HOST=0.0.0.0# can use "make ES_HOST=elasticsearch seed-testenv" to override
+export ES_PORT=9200# can use "make ES_PORT=9201 seed-testenv" to override
 
 .PHONY: all dependencies clean test cover testall testvall start-testenv stop-testenv
 
