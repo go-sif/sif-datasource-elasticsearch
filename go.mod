@@ -4,7 +4,7 @@ require (
 	github.com/elastic/go-elasticsearch/v6 v6.8.10
 	github.com/elastic/go-elasticsearch/v7 v7.16.0
 	github.com/elastic/go-elasticsearch/v8 v8.0.0-alpha
-	github.com/go-sif/sif v0.0.0-20211221061337-e29587869c5d
+	github.com/go-sif/sif v0.0.0-20220107060524-7f4b7eea4c1a
 	github.com/jinzhu/copier v0.3.4
 	github.com/stretchr/testify v1.7.0
 	github.com/tidwall/gjson v1.12.1
@@ -19,11 +19,9 @@ require (
 	github.com/hashicorp/errwrap v1.1.0 // indirect
 	github.com/hashicorp/go-multierror v1.1.1 // indirect
 	github.com/kr/pretty v0.3.0 // indirect
-	github.com/kr/text v0.2.0 // indirect
 	github.com/moby/locker v1.0.1 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
-	github.com/rogpeppe/go-internal v1.6.1 // indirect
-	github.com/stretchr/objx v0.1.0 // indirect
+	github.com/rogpeppe/go-internal v1.8.1 // indirect
 	github.com/tidwall/match v1.1.1 // indirect
 	github.com/tidwall/pretty v1.2.0 // indirect
 	golang.org/x/net v0.0.0-20220105145211-5b0dc2dfae98 // indirect
@@ -34,7 +32,5 @@ require (
 	google.golang.org/protobuf v1.27.1 // indirect
 	gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b // indirect
 )
-
-replace github.com/go-sif/sif => ../sif
 
 go 1.18

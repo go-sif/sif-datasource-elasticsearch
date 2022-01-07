@@ -1,5 +1,7 @@
 # Sif ElasticSearch DataSource
 
+[![GoDoc](https://godoc.org/github.com/go-sif/sif?status.svg)](https://pkg.go.dev/github.com/go-sif/sif-datasource-elasticsearch) [![Go Report Card](https://goreportcard.com/badge/github.com/go-sif/sif-datasource-elasticsearch)](https://goreportcard.com/report/github.com/go-sif/sif-datasource-elasticsearch) ![Tests](https://github.com/go-sif/sif-datasource-elasticsearch/workflows/Tests/badge.svg) [![codecov.io](https://codecov.io/github/go-sif/sif-datasource-elasticsearch/coverage.svg?branch=master)](https://codecov.io/gh/go-sif/sif-datasource-elasticsearch?branch=master)
+
 An ElasticSearch (6/7) DataSource for Sif.
 
 ```bash
