@@ -34,7 +34,7 @@ jobs:
           ${{ runner.os }}-go-
     - name: Install docker test dependencies
       run: |
-        sudo apt -y docker.io
+        sudo apt install -y docker.io
         sudo systemctl start docker
     - run: make dependencies
     - run: make start-testenv
