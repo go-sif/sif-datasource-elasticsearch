@@ -1,0 +1,40 @@
+name: Tests
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    if: "!contains(github.event.head_commit.message, '[skip ci]')"
+    name: "Tests (${{ matrix.os }})"
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        go: ['1.18']
+    steps:
+    - uses: actions/checkout@v2
+      with: { fetch-depth: 1 }
+    - uses: actions/setup-go@v2
+      with: { go-version: "${{ matrix.go }}" }
+    - uses: arduino/setup-protoc@v1
+    - run: go version
+    - uses: actions/cache@v2
+      with:
+        path: |
+          ~/.cache/go-build
+          ~/go/pkg/mod
+        key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+        restore-keys: |
+          ${{ runner.os }}-go-
+    - name: Install docker test dependencies
+      run: |
+        sudo apt -y docker.io
+        sudo systemctl start docker
+    - run: make dependencies
+    - run: make cover
+    - uses: codecov/codecov-action@v2
+      with:
+        file: cover.out

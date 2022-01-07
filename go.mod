@@ -2,6 +2,8 @@ module github.com/go-sif/sif-datasource-elasticsearch
 
 require (
 	github.com/elastic/go-elasticsearch/v6 v6.8.6-0.20200322094132-10ed2f596d91
+	github.com/elastic/go-elasticsearch/v7 v7.16.0
+	github.com/elastic/go-elasticsearch/v8 v8.0.0-alpha
 	github.com/go-sif/sif v0.0.0-20200520005205-e99f8baeb897
 	github.com/jinzhu/copier v0.3.4
 	github.com/stretchr/testify v1.7.0
@@ -12,8 +14,6 @@ require (
 	github.com/cespare/xxhash/v2 v2.1.2 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/elastic/elastic-transport-go/v8 v8.0.0-alpha // indirect
-	github.com/elastic/go-elasticsearch/v7 v7.16.0 // indirect
-	github.com/elastic/go-elasticsearch/v8 v8.0.0-alpha // indirect
 	github.com/gofrs/uuid v4.2.0+incompatible // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/hashicorp/errwrap v1.1.0 // indirect

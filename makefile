@@ -19,11 +19,11 @@ all:
 	@echo "  stop-testenv  - stop testing environment after running tests"
 
 dependencies:
-	@go get -u golang.org/x/tools
-	@go get -u golang.org/x/lint/golint
-	@go get -u golang.org/x/tools/cmd/godoc
-	@go get -u github.com/unchartedsoftware/witch
-	@go get -u github.com/go-sif/sif
+	@go install golang.org/x/lint/golint@latest
+	@go install golang.org/x/tools/cmd/cover@latest
+	@go install golang.org/x/tools/cmd/godoc@latest
+	@go install github.com/ory/go-acc@latest
+	@go install github.com/unchartedsoftware/witch@latest
 	@go get -d -v ./...
 
 fmt:
@@ -56,23 +56,23 @@ stop-testenv:
 
 test: build
 	@echo "Running tests..."
-	@go test -short -count=1 ./...
+	@go test -short -p 1 -count=1 ./...
 
 testall: build
 	@echo "Running tests..."
-	@go test -timeout 30m -count=1 ./...
+	@go test -timeout 30m -p 1 -count=1 ./...
 
 testv: build
 	@echo "Running tests..."
-	@go test -short -v ./...
+	@go test -short -p 1 -count=1 -v ./...
 
 testvall: build
 	@echo "Running tests..."
-	@go test -timeout 30m -v -count=1 ./...
+	@go test -timeout 30m -v  -p 1 -count=1 ./...
 
 cover: build
 	@echo "Running tests with coverage..."
-	@go test -coverprofile=cover.out -coverpkg=./... ./...
+	@go-acc -o cover.out ./... -- -p 1 -count=1
 	@go tool cover -html=cover.out -o cover.html
 
 generate:
