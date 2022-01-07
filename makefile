@@ -51,6 +51,7 @@ start-testenv:
 seed-testenv:
 	@echo "Inserting EDSM test files..."
 	@echo "Testing connectivity"
+	@echo "curl ${ES_HOST}:${ES_PORT}/_cluster/health"
 	@curl "${ES_HOST}:${ES_PORT}/_cluster/health"
 	@echo "Deleting index if present..."
 	@curl -s -X DELETE "${ES_HOST}:${ES_PORT}/edsm" || true > /dev/null 2>&1
