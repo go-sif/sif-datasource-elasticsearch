@@ -42,10 +42,12 @@ lint:
 start-testenv:
 	@echo "Starting ES container..."
 	@${DOCKER} run -d --name sif-datasource-elasticsearch -e cluster.routing.allocation.disk.threshold_enabled=false -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" docker.elastic.co/elasticsearch/elasticsearch:7.16.2
-
-seed-testenv:
 	@echo "Waiting 30 seconds for container to bootstrap..."
 	@sleep 30
+	@echo "Finished starting ES container..."
+
+seed-testenv:
+	@echo "Inserting EDSM test files..."
 	@echo "Deleting index if present..."
 	@curl -s -X DELETE "0.0.0.0:9200/edsm" || true > /dev/null 2>&1
 	@echo "Creating index..."
